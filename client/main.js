@@ -637,9 +637,11 @@ $(document).ready(function() {
 
   function getCurrentBillBoard(cb) {
     $.ajax({
-      url: '/billboard',
+      url: '/api/Flyers/findOne?'
+      + 'filter=%7B%22order%22%3A%20%20%22id%20DESC%22%7D',
       method: 'GET',
-      dataType: 'JSON'
+      dataType: 'JSON',
+      data: {'order': 'id DESC'}
     }).done((resp) => {
       cb(resp);
     });
@@ -657,9 +659,13 @@ $(document).ready(function() {
     });
   }
 
-  function handleNewBillBoard(message) {
-    if (main.localStorageIO('lastBillBoardSeen') !== message.data) {
-      $('#billContent').text(message.data);
+  function handleNewBillBoard(resp) {
+    if (
+      main.localStorageIO('lastBillBoardSeen').replace(/\s/gi, '')
+      !== resp.message.replace(/\s/gi, '')
+      && resp.active
+    ) {
+      $('#billContent').html(resp.message);
       $('#billBoard').fadeIn();
     }
   }
