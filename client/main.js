@@ -134,7 +134,7 @@ main = (function(main, global) {
       localStorage.setItem(item, input);
       return input;
     } else {
-      let data = localStorage.getItem(item);
+      let data = typeof localStorage.getItem(item) !== 'undefined' && localStorage.getItem(item) !== null ? localStorage.getItem(item) : "";
       try {
         data = JSON.parse(data);
       } catch (e) {
@@ -660,8 +660,9 @@ $(document).ready(function() {
   }
 
   function handleNewBillBoard(resp) {
+    const data = typeof main.localStorageIO('lastBillBoardSeen') !== "undefined" && main.localStorageIO('lastBillBoardSeen') !== null ? main.localStorageIO('lastBillBoardSeen') : "";
     if (
-      main.localStorageIO('lastBillBoardSeen').replace(/\s/gi, '')
+      data.replace(/\s/gi, '')
       !== resp.message.replace(/\s/gi, '')
       && resp.active
     ) {

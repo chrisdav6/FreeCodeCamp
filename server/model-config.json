@@ -67,7 +67,7 @@
     "dataSource": "db",
     "public": true
   },
-  "Flyer": {
+  "flyer": {
     "dataSource": "db",
     "public": true
   }
